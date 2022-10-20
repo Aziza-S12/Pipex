@@ -6,7 +6,7 @@
 /*   By: asadritd <asadritd@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:23:55 by asadritd          #+#    #+#             */
-/*   Updated: 2022/10/18 19:48:43 by asadritd         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:33:04 by asadritd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ char	*path_finding(char **envp, int i)
 	char	*env_path;
 
 	env_path = NULL;
-	i = 0; 
-	while(envp[i]) //loop in envp to find the line that starts with "PATH="
+	while(envp[++i]) //loop in envp to find the line that starts with "PATH="
 	{
 		if (ft_strnstr(envp[i], "PATH=", ft_strlen(envp[i])))
 		{
@@ -26,11 +25,10 @@ char	*path_finding(char **envp, int i)
 			break;
 		}
 	}
-	i++;
 	return (env_path);
 }
 
-char	*command_path(char *argv, char **envp)
+char	*cmd_path(char *argv, char **envp)
 {
 	char	*env_path;
 	char	*cmd_path;
@@ -50,12 +48,38 @@ char	*command_path(char *argv, char **envp)
 	i = -1;
 	while (paths[++i]) //while there is a path to test
 	{
-		cmd_path = ft_split(paths[i], argv); //add our command to the end
+		cmd_path = ft_strjoin(paths[i], argv); //add our command to the end
 		if (access(cmd_path, F_OK | X_OK) == 0) //test if the path is accessible and executable
 			return (cmd_path); // if true - we've found the correct path
 		free (cmd_path);
 	}
 	return(cmd_path);
+}
+
+void	execution(char *argv, char **envp)
+{
+	char	**cmnd;
+	char	*path;
+	int		i;
+
+	i = -1;
+	cmnd = ft_split(argv, ' ');
+	path = cmd_path(argv, envp);
+	if (!path)
+	{
+		while (cmnd[++i])
+			free(cmnd[i]);
+		free(cmnd);
+		error_giv();
+	}
+	if (execve(path, cmnd, envp) == -1)
+		error_giv();
+}
+
+void	error_giv(void)
+{
+	perror("Error");
+	exit(EXIT_FAILURE);
 }
 
 // int main(int argc, char **argv, char**envp)

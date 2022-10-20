@@ -6,7 +6,7 @@
 #    By: asadritd <asadritd@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/11 18:04:59 by asadritd          #+#    #+#              #
-#    Updated: 2022/10/13 14:07:59 by asadritd         ###   ########.fr        #
+#    Updated: 2022/10/20 18:33:15 by asadritd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = pipex
 
 SRC_DIR = Source
 
-SRC =
+SRC = main.c paths.c\
 
 OBJ = $(SRC: *.c=*.o)
 
