@@ -6,7 +6,7 @@
 /*   By: asadritd <asadritd@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 17:23:55 by asadritd          #+#    #+#             */
-/*   Updated: 2022/10/20 18:33:04 by asadritd         ###   ########.fr       */
+/*   Updated: 2022/10/22 17:15:14 by asadritd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	execution(char *argv, char **envp)
 
 	i = -1;
 	cmnd = ft_split(argv, ' ');
-	path = cmd_path(argv, envp);
+	path = cmd_path(cmnd[0], envp);
 	if (!path)
 	{
 		while (cmnd[++i])
